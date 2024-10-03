@@ -28,6 +28,7 @@ class RealtorListingController extends Controller
                 'listings' => Auth::user()
                     ->listings()
                     ->filters($filters)
+                    ->withCount('images')
                     ->paginate(5)
                     ->withQueryString()
             ]
@@ -102,5 +103,12 @@ class RealtorListingController extends Controller
     {
         $listing->deleteOrFail();
         return redirect()->route('realtor.listing.index')->with('success', 'Listing deleted successfully!');
+    }
+
+    public function restore(Listing $listing)
+    {
+        $listing->restore();
+
+        return redirect()->back()->with('success', 'Listing restored successfully!');
     }
 }
