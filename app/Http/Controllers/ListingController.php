@@ -20,7 +20,12 @@ class ListingController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only([
-            'priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'
+            'priceFrom',
+            'priceTo',
+            'beds',
+            'baths',
+            'areaFrom',
+            'areaTo'
         ]);
 
 
@@ -30,6 +35,7 @@ class ListingController extends Controller
                 'filters' => $filters,
                 'listings' => Listing::mostRecent()
                     ->filters($filters)
+                    ->withoutSold()
                     ->paginate(10)
                     ->withQueryString(),
             ]

@@ -26,7 +26,8 @@ class Listing extends Model
     ];
 
     protected $sortable = [
-        'price', 'created_at'
+        'price',
+        'created_at'
     ];
 
     public function owner(): BelongsTo
@@ -48,41 +49,52 @@ class Listing extends Model
     {
         return $query->orderBy('created_at', 'desc');
     }
+    public function scopeWithoutSold(Builder $query): Builder
+    {
+        // return $query->doesntHave('offers')
+        //     ->orWhereHas(
+        //         'offers',
+        //         fn(Builder $query) =>
+        //         $query->whereNull('accepted_at')
+        //             ->whereNull('rejected_at')
+        //     );
 
+        return $query->whereNull('sold_at');
+    }
     public function scopeFilters(Builder $query, array $filters)
     {
         return $query
             ->when(
                 $filters['priceFrom'] ?? false,
-                fn ($query, $priceFrom) => $query->where('price', '>=', $priceFrom)
+                fn($query, $priceFrom) => $query->where('price', '>=', $priceFrom)
             )
             ->when(
                 $filters['priceTo'] ?? false,
-                fn ($query, $priceTo) => $query->where('price', '<=', $priceTo)
+                fn($query, $priceTo) => $query->where('price', '<=', $priceTo)
             )
             ->when(
                 $filters['beds'] ?? false,
-                fn ($query, $beds) => $query->where('beds', (int)$beds == 6 ? ">=" : "=", $beds)
+                fn($query, $beds) => $query->where('beds', (int)$beds == 6 ? ">=" : "=", $beds)
             )
             ->when(
                 $filters['baths'] ?? false,
-                fn ($query, $baths) => $query->where('baths', (int) $baths == 6 ? ">=" : "=", $baths)
+                fn($query, $baths) => $query->where('baths', (int) $baths == 6 ? ">=" : "=", $baths)
             )
             ->when(
                 $filters['areaFrom'] ?? false,
-                fn ($query, $areaFrom) => $query->where('area', '>=', $areaFrom)
+                fn($query, $areaFrom) => $query->where('area', '>=', $areaFrom)
             )
             ->when(
                 $filters['areaTo'] ?? false,
-                fn ($query, $areaTo) => $query->where('area', '<=', $areaTo)
+                fn($query, $areaTo) => $query->where('area', '<=', $areaTo)
             )
             ->when(
                 $filters['deleted'] ?? false,
-                fn ($query) => $query->withTrashed()
+                fn($query) => $query->withTrashed()
             )
             ->when(
                 $filters['by'] ?? false,
-                fn ($query, $by) =>
+                fn($query, $by) =>
                 !in_array($by, $this->sortable) ? $query :
                     $query->orderBy($by, $filters['order'] ?? 'desc')
             );
