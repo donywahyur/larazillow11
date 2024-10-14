@@ -9,6 +9,12 @@
                     <Link :href="route('listing.index')">LaraZillow</Link>
                 </div>
                 <div class="flex items-center gap-4" v-if="user">
+                    <div class="text-gray-500 relative pr-2 py-2 text-lg">
+                        🔔
+                        <div class="absolute right-0 top-0 w-5 h-5 bg-red-700 dark:bg-red-400 text-white font-medium border border-white dark:border-gray-900 rounded-full text-xs text-center">
+                            {{ notificationCount }}
+                        </div>
+                    </div>
                     <Link :href="route('realtor.listing.index')" class="text-sm text-gray-400">{{ user.name }}</Link
                         :href="route('realtor.listing.index')">
                     <Link :href="route('realtor.listing.create')" class="btn-primary">
@@ -47,6 +53,8 @@ import { ref } from "vue";
 
 const page = usePage();
 const flashSuccess = computed(() => page.props.flash.success);
-
 const user = computed(() => page.props.user);
+const notificationCount = computed(() => 
+Math.min(page.props.user.notificationCount,9)
+);
 </script>
