@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Policies\NotificationPolicy;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Gate;
