@@ -1,0 +1,17 @@
+akamud.vscode-theme-onedark
+amiralizadeh9480.laravel-extra-intellisense
+bmewburn.vscode-intelephense-client
+bradlc.vscode-tailwindcss
+codeium.codeium
+dart-code.dart-code
+dart-code.flutter
+eamodio.gitlens
+esbenp.prettier-vscode
+github.copilot
+github.vscode-pull-request-github
+ms-vscode.vscode-typescript-next
+seyyedkhandon.firacode
+tyriar.lorem-ipsum
+usernamehw.errorlens
+vue.volar
+zhuangtongfa.material-theme
